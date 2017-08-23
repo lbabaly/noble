@@ -62,14 +62,19 @@ Make sure you have read and write permissions on the ```/dev/usb/*``` device tha
 
 ### Windows
 
- * [node-gyp requirements for Windows](https://github.com/TooTallNate/node-gyp#installation)
-   * Python 2.7
-   * Visual Studio ([Express](https://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx))
- * [node-bluetooth-hci-socket prerequisites](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows)
+[node-gyp requirements for Windows](https://github.com/TooTallNate/node-gyp#installation)
+
+Install the required tools and configurations using Microsoft's [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools) from an elevated PowerShell or cmd.exe (run as Administrator).
+
+```cmd
+npm install --global --production windows-build-tools
+```
+
+[node-bluetooth-hci-socket prerequisites](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows)
    * Compatible Bluetooth 4.0 USB adapter
    * [WinUSB](https://msdn.microsoft.com/en-ca/library/windows/hardware/ff540196(v=vs.85).aspx) driver setup for Bluetooth 4.0 USB adapter, using [Zadig tool](http://zadig.akeo.ie/)
 
-See [@don](https://github.com/don)'s set up guide on [Bluetooth LE with Node.js and Noble on Windows](https://www.youtube.com/watch?v=mL9B8wuEdms).
+See [@don](https://github.com/don)'s set up guide on [Bluetooth LE with Node.js and Noble on Windows](https://www.youtube.com/watch?v=mL9B8wuEdms&feature=youtu.be&t=1m46s)
 
 ## Notes
 
@@ -84,9 +89,11 @@ This limit is imposed upon by the Bluetooth adapter hardware as well as it's fir
 
 ### Adapter specific known issues
 
-Some BLE adapters like Sena UD-100 (Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)) cannot connect to a peripheral while they are scanning. You will get the following message when trying to connect :
+Some BLE adapters cannot connect to a peripheral while they are scanning (examples below). You will get the following messages when trying to connect :
 
-`Error: Command disallowed`
+Sena UD-100 (Cambridge Silicon Radio, Ltd Bluetooth Dongle (HCI mode)) : `Error: Command disallowed`
+
+Intel Dual Band Wireless-AC 7260 (Intel Corporation Wireless 7260 (rev 73)) : `Error: Connection Rejected due to Limited Resources (0xd)`
 
 You need to stop scanning before trying to connect in order to solve this issue.
 
@@ -159,7 +166,7 @@ peripheral.discoverServices(serviceUUIDs[, callback(error, services)]); // parti
 ##### Discover all services and characteristics
 
 ```javascript
-peripheral.discoverAllServicesAndCharacteristics([callback(error, services, characteristics));
+peripheral.discoverAllServicesAndCharacteristics([callback(error, services, characteristics)]);
 ```
 
 ##### Discover some services and characteristics
